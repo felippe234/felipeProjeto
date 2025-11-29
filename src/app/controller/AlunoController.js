@@ -78,6 +78,25 @@ class AlunoController {
       res.status(500).json({ erro: "Erro ao atualizar aluno" });
     }
   }
+  // 🔹 PATCH - Atualização parcial
+async patch(req, res) {
+  const { id } = req.params;
+  const campos = req.body;
+
+  if (!id) return res.status(400).json({ erro: "ID do aluno é obrigatório" });
+
+  try {
+    const linhasAfetadas = await AlunoRepository.patch(id, campos);
+    if (linhasAfetadas === 0)
+      return res.status(404).json({ msg: "Aluno não encontrado" });
+
+    res.status(200).json({ msg: "Aluno atualizado com sucesso", campos });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ erro: "Erro ao atualizar parcialmente o aluno" });
+  }
+}
+
 
   async delete(req, res) {
     const { id } = req.params;

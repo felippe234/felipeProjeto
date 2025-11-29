@@ -7,7 +7,7 @@ const port = 4001;
 
 app.use(cors({
   origin: ["http://localhost:3000","http://192.168.0.30:3000","http://192.168.0.30:3000"],
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ["GET", "POST", "PUT","PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 app.use(express.json());

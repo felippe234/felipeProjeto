@@ -72,6 +72,24 @@ class AlunoRepository {
     return result.affectedRows;
   }
 
+  // ✏️ Atualização parcial (PATCH)
+async patch(id, campos) {
+  // Monta dinamicamente o SQL conforme os campos enviados
+  const chaves = Object.keys(campos);
+  if (chaves.length === 0) return 0; // nada a atualizar
+
+  const valores = Object.values(campos);
+  const setClause = chaves.map((col) => `${col} = ?`).join(", ");
+
+  const [result] = await conexao.execute(
+    `UPDATE Aluno SET ${setClause} WHERE id = ?`,
+    [...valores, id]
+  );
+
+  return result.affectedRows;
+}
+
+
   // 🗑️ Deletar aluno
   async deletar(id) {
     const [result] = await conexao.execute("DELETE FROM Aluno WHERE id = ?", [id]);
